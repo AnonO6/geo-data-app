@@ -44,7 +44,7 @@ const AccountManagement = () => {
     };
     try {
       const response = await axios.put(
-        "http://146.190.9.51/api/update",
+        "https://geoapi.aviral.software/api/update",
         updateData,
         {
           headers: {

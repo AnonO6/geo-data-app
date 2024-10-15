@@ -14,7 +14,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://146.190.9.51/api/login",
+        "https://geoapi.aviral.software/api/login",
         {
           email,
           password,

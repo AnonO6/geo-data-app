@@ -20,7 +20,7 @@ const SignUp = () => {
     try {
       // Call the registration API
       const response = await axios.post(
-        "http://146.190.9.51/api/register",
+        "https://geoapi.aviral.software/api/register",
         {
           email,
           password,
