@@ -39,7 +39,7 @@ const SignUp = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-rose-100 via-purple-100 to-teal-100 animate-text">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
         <h2 className="text-2xl font-semibold text-gray-700 mb-6 text-center">
           Sign Up
         </h2>
@@ -85,7 +85,7 @@ const SignUp = () => {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-500 transition-all"
+            className="w-full bg-gray-800 text-white py-2 rounded-lg font-semibold hover:bg-indigo-500 transition-all"
           >
             Sign Up
           </button>
