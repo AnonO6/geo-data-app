@@ -26,11 +26,13 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout />, // Wrap in Layout with header
+      element: <Layout />,
+      errorElement: <ErrorPage />,
       children: [
         {
           index: true,
-          element: isAuthenticated ? <Navigate to="/main" /> : <LandingPage />, // Redirect to main if logged in
+          // element: isAuthenticated ? <Navigate to="/main" /> : <LandingPage />, // Redirect to main if logged in
+          element: <MainPage />,
         },
         {
           path: "/login",
@@ -51,10 +53,6 @@ const App = () => {
         {
           path: "/main",
           element: isAuthenticated ? <MainPage /> : <Navigate to="/" />, // Redirect to landing if not authenticated
-        },
-        {
-          path: "*",
-          element: <ErrorPage />, // Fallback error page for unknown routes
         },
       ],
     },
