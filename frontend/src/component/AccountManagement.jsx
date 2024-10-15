@@ -44,7 +44,7 @@ const AccountManagement = () => {
     };
     try {
       const response = await axios.put(
-        "http://localhost:8080/api/update",
+        "http://146.190.9.51/api/update",
         updateData,
         {
           headers: {

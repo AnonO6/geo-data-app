@@ -20,7 +20,7 @@ const SignUp = () => {
     try {
       // Call the registration API
       const response = await axios.post(
-        "http://localhost:8080/api/register",
+        "http://146.190.9.51/api/register",
         {
           email,
           password,
