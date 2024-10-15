@@ -14,6 +14,7 @@ const AccountManagement = () => {
       try {
         const response = await axios.get("http://localhost:8080/api/account", {
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
@@ -41,6 +42,7 @@ const AccountManagement = () => {
         },
         {
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }

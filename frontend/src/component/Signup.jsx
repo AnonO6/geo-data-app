@@ -19,10 +19,18 @@ const SignUp = () => {
 
     try {
       // Call the registration API
-      const response = await axios.post("http://localhost:8080/api/register", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/register",
+        {
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json", // Ensure the content type is set to JSON
+          },
+        }
+      );
 
       // Assuming the backend returns a token upon successful registration
       const { token } = response.data;

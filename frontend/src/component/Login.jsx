@@ -13,10 +13,18 @@ const Login = () => {
     setError(""); // Reset any previous errors
 
     try {
-      const response = await axios.post("http://localhost:8080/api/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/login",
+        {
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json", // Ensure the content type is set to JSON
+          },
+        }
+      );
 
       // Assuming the response contains a token
       const { token } = response.data;
