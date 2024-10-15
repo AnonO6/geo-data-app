@@ -12,7 +12,7 @@ const AccountManagement = () => {
     // Fetch current account details
     const fetchAccountDetails = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/account", {
+        const response = await axios.get("http://localhost:8080/api/account", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -25,7 +25,7 @@ const AccountManagement = () => {
       }
     };
 
-    fetchAccountDetails();
+    // fetchAccountDetails();
   }, []);
 
   const handleUpdate = async (e) => {
@@ -33,7 +33,7 @@ const AccountManagement = () => {
 
     try {
       const response = await axios.put(
-        "http://localhost:4000/api/account",
+        "http://localhost:8080/api/account",
         {
           username,
           email,

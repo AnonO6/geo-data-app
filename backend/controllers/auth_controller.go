@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/AnonO6/geo-data-app/services"
@@ -16,28 +16,33 @@ func NewAuthController(authService *services.AuthService) *AuthController {
 	return &AuthController{authService}
 }
 
+// Register handles the registration of a new user
 func (ac *AuthController) Register(w http.ResponseWriter, r *http.Request) {
-	var req services.RegisterRequest
-	json.NewDecoder(r.Body).Decode(&req)
-
-	err := ac.authService.Register(req)
-	if err != nil {
-		utils.JSONError(w, err.Error(), http.StatusBadRequest)
+	log.Println("Registering user")
+	if r.Method != http.MethodPost {
+		utils.JSONError(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	utils.JSONSuccess(w, "User registered successfully", http.StatusCreated)
+	ac.authService.Register(w, r) // Use AuthService handler
 }
 
+// Login handles user login and token generation
 func (ac *AuthController) Login(w http.ResponseWriter, r *http.Request) {
-	var req services.LoginRequest
-	json.NewDecoder(r.Body).Decode(&req)
-
-	token, err := ac.authService.Login(req)
-	if err != nil {
-		utils.JSONError(w, err.Error(), http.StatusUnauthorized)
+	if r.Method != http.MethodPost {
+		utils.JSONError(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	utils.JSONSuccess(w, token, http.StatusOK)
+	ac.authService.Login(w, r) // Use AuthService handler
+}
+
+// UpdateUser handles updating user details (requires JWT token)
+func (ac *AuthController) UpdateUser(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPut {
+		utils.JSONError(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	ac.authService.UpdateUser(w, r) // Use AuthService handler for user updates
 }

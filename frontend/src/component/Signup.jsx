@@ -19,7 +19,7 @@ const SignUp = () => {
 
     try {
       // Call the registration API
-      const response = await axios.post("http://localhost:4000/api/register", {
+      const response = await axios.post("http://localhost:8080/api/register", {
         email,
         password,
       });
