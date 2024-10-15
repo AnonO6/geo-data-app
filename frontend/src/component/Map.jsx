@@ -46,11 +46,11 @@ const Map = ({ geojsonData }) => {
       >
         Download GeoJSON
       </button>
-      <div className="w-11/12 h-[80vh] mx-auto rounded-lg relative">
+      <div className="w-11/12 h-[80vh] mx-auto rounded-lg relative ">
         <MapContainer
           center={[51.505, -0.09]}
           zoom={13}
-          className="h-full w-full"
+          className="h-full w-full boreder-2 border-black"
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 

@@ -32,20 +32,26 @@ const AccountManagement = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setError("No authentication token found. Please log in again.");
+      return;
+    }
+    const updateData = {
+      email: email,
+      password: newPassword,
+      old_password: oldPassword,
+    };
     try {
       const response = await axios.put(
-        "http://localhost:8080/api/account",
-        {
-          email,
-          password: newPassword,
-          old_password: oldPassword || undefined, // Only send the password if it's updated
-        },
+        "http://localhost:8080/api/update",
+        updateData,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
+          timeout: 2000,
         }
       );
 
@@ -56,6 +62,7 @@ const AccountManagement = () => {
     } catch (err) {
       setError("Failed to update account information.");
       console.log(err);
+      console.log(token);
       setSuccess(false); // Ensure success message doesn't appear
     }
   };

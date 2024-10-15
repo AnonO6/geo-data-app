@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"os"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -44,7 +44,7 @@ func JSONError(w http.ResponseWriter, message string, statusCode int) {
 }
 
 // JWT secret key (read from environment variables)
-var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
+var jwtSecret = []byte("secret")
 
 // Claims represents the structure of JWT claims
 type Claims struct {
@@ -70,10 +70,10 @@ func VerifyJWT(tokenString string) (*Claims, error) {
 }
 
 // GenerateJWT generates a JWT token for a given username
-func GenerateJWT(username string) (string, error) {
+func GenerateJWT(email string) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour).Unix()
 	claims := &Claims{
-		Username: username,
+		Username: email,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime,
 		},
@@ -96,9 +96,16 @@ func IsValidEmail(email string) bool {
 
 // GetTokenFromHeader extracts the JWT token from the request header
 func GetTokenFromHeader(r *http.Request) (string, error) {
-	token := r.Header.Get("Authorization")
-	if token == "" {
-		return "", errors.New("missing token")
+	authHeader := r.Header.Get("Authorization")
+	if authHeader == "" {
+		return "", errors.New("Authorization header missing")
 	}
-	return token, nil
+
+	// Token should be in the format "Bearer <token>"
+	parts := strings.Split(authHeader, " ")
+	if len(parts) != 2 || parts[0] != "Bearer" {
+		return "", errors.New("Invalid Authorization header format")
+	}
+
+	return parts[1], nil
 }

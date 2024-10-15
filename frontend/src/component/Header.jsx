@@ -8,7 +8,7 @@ const Header = () => {
     // Check for token in localStorage when the component mounts
     const storedToken = localStorage.getItem("token");
     setToken(storedToken);
-  }, []);
+  });
 
   return (
     <header className="bg-gray-800 text-white py-4 inset-x-0">
