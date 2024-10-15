@@ -53,7 +53,7 @@ This project is a full-stack web application that provides user authentication, 
 2. Install dependencies:
 
    ```bash
-   npm install
+   npm ci
    ```
 
 3. Run the development server:
@@ -63,7 +63,7 @@ This project is a full-stack web application that provides user authentication, 
    ```
 
 4. Access the frontend:
-   Open your browser and go to `http://localhost:3000` to view the application.
+   Open your browser and go to `http://localhost:5173` to view the application.
 
 ### 2. Running the Backend
 
@@ -73,6 +73,8 @@ This project is a full-stack web application that provides user authentication, 
 
    ```bash
    cd backend
+   go mod tidy
+   go run main.go
    ```
 
 2. Configure environment variables:
