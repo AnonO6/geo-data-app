@@ -4,25 +4,84 @@ Deployed Link -
 
 The GeoData Application is a web-based tool built with React and the Leaflet library, designed to facilitate the interaction with geographical data in various formats. Users can upload GeoJSON and KML files, visualize them on a map, draw custom shapes, and download the created shapes for further use.
 
-## Demo Video -
+## Demo Video - https://drive.google.com/file/d/1Rkmu3jOJClvEsNMCEylnXGE9waQny9D3/view?usp=drive_link
 
-## Demo - ![Screenshot 2024-03-16 172524](https://github.com/VishvendraTomar/Geo-Data-App/assets/95501800/9af166b2-7194-4c88-8f95-9e4f6559e608)
+# Project Name
 
-## Features
+## Description
 
-- **Drag and Drop:** Easily upload GeoJSON and KML files by dragging and dropping them onto the application.
-- **Map View:** Visualize geographical data on a map using Leaflet, providing an interactive and customizable viewing experience.
-- **Drawing Tools:** Draw custom shapes directly on the map using the provided drawing tools from the React Leaflet Draw library.
+This project is a full-stack web application that provides user authentication, account management, and secure access to user data. The frontend is built using **React.js** and deployed on **Vercel**, while the backend is written in **Go** and hosted on **DigitalOcean App Platform**. The application uses **Neon DB** for a cloud-based, serverless PostgreSQL database, eliminating the need for local PostgreSQL setup. The frontend communicates with the backend via RESTful APIs to manage user sessions, perform account updates, and securely handle user data.
 
-- **Download Shapes:** Download the custom shapes drawn on the map in various formats for offline use or sharing.
+## System Design Overview
 
-## Usage
+### Architecture:
 
-1. **Installation:**
+#### Frontend:
+
+- Developed in **React.js** with **Tailwind CSS** for UI styling.
+- Deployed on **Vercel**, offering seamless integration with GitHub for continuous deployment.
+- Communicates with the backend using **Axios** to make API requests for login, signup, and account management.
+
+#### Backend:
+
+- Built using **Go** and exposes RESTful API endpoints for handling authentication (login/signup), user data retrieval, and account updates.
+- Deployed on **DigitalOcean App Platform**, which allows easy scaling and management of the Go application.
+
+#### Database:
+
+- Hosted on **Neon**, a serverless PostgreSQL database solution that scales automatically with the needs of the application.
+- The Go backend connects to **Neon DB** for persistent storage of user information and authentication data.
+
+## Running the Project Locally
+
+### Prerequisites
+
+- **Node.js** for running the frontend.
+- **Go** for running the backend.
+- Make sure you have access to the environment variables required to connect the backend to the Neon database.
+
+### 1. Running the Frontend
+
+**Steps:**
+
+1. Navigate to the frontend directory:
+
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
 
    ```bash
    npm install
    ```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3. Run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Access the frontend:
+   Open your browser and go to `http://localhost:3000` to view the application.
+
+### 2. Running the Backend
+
+**Steps:**
+
+1. Navigate to the backend directory:
+
+   ```bash
+   cd backend
+   ```
+
+2. Configure environment variables:
+   Create a `.env` file in the backend directory and add the necessary configuration:
+   ```plaintext
+   DB_HOST=your-neon-db-host
+   DB_PORT=5432
+   DB_USER=your-db-username
+   DB_PASSWORD=your-db-password
+   DB_NAME=your-db-name
+   JWT_SECRET=your-secret-key
+   ```

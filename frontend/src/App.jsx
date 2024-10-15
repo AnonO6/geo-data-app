@@ -36,7 +36,7 @@ const App = () => {
         },
         {
           path: "/login",
-          element: <Navigate to="/main" />, // Redirect to main if already logged in
+          element: isAuthenticated ? <Navigate to="/main" /> : <Login />, // Redirect to main if already logged in
         },
         {
           path: "/signup",

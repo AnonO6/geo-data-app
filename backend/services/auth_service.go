@@ -34,6 +34,7 @@ type LoginRequest struct {
 func (as *AuthService) Register(w http.ResponseWriter, r *http.Request) {
 	var req RegisterRequest
 
+	// Decode request body
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		utils.JSONError(w, "Invalid request payload", http.StatusBadRequest)
 		return
@@ -51,6 +52,18 @@ func (as *AuthService) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Check if user with the same email already exists
+	var existingUser models.User
+	if err := as.db.Where("email = ?", req.Email).First(&existingUser).Error; err == nil {
+		// User with the provided email already exists
+		utils.JSONError(w, "User with this email already exists", http.StatusConflict) // 409 Conflict
+		return
+	} else if !errors.Is(err, gorm.ErrRecordNotFound) {
+		// Handle unexpected database errors
+		utils.JSONError(w, "Database error", http.StatusInternalServerError)
+		return
+	}
+
 	// Hash the password
 	hashedPassword, err := utils.HashPassword(req.Password)
 	if err != nil {
@@ -64,15 +77,6 @@ func (as *AuthService) Register(w http.ResponseWriter, r *http.Request) {
 		Password: hashedPassword,
 	}
 
-	if err := as.db.Where("email = ?", user.Email).First(&user).Error; err != nil {
-		if !errors.Is(err, gorm.ErrRecordNotFound) {
-			utils.JSONError(w, "Database error", http.StatusInternalServerError)
-			return
-		}
-		utils.JSONError(w, "User already exists", http.StatusConflict)
-		return
-	}
-
 	if err := as.db.Create(&user).Error; err != nil {
 		utils.JSONError(w, "Failed to create user", http.StatusInternalServerError)
 		return
@@ -80,7 +84,6 @@ func (as *AuthService) Register(w http.ResponseWriter, r *http.Request) {
 
 	utils.JSONSuccess(w, "User registered successfully", http.StatusCreated)
 }
-
 func (as *AuthService) Login(w http.ResponseWriter, r *http.Request) {
 	var req LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {

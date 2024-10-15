@@ -33,7 +33,7 @@ const Login = () => {
       localStorage.setItem("token", token);
 
       // Redirect to the home page
-      navigate("/");
+      navigate("/main");
     } catch (err) {
       setError("Login failed. Please check your credentials.");
     }
