@@ -10,6 +10,7 @@ import (
 	"github.com/AnonO6/geo-data-app/middleware"
 	"github.com/AnonO6/geo-data-app/models"
 	"github.com/AnonO6/geo-data-app/services"
+	"github.com/gorilla/handlers" // Import handlers for CORS
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
 )
@@ -18,6 +19,7 @@ func main() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 	logrus.SetOutput(os.Stdout)
 	logrus.SetLevel(logrus.InfoLevel)
+
 	// Initialize config, DB, and Redis connection
 	config.LoadEnv()
 	db := config.InitDB()
@@ -47,8 +49,15 @@ func main() {
 	api.HandleFunc("/geojson/{id}", geoController.GetGeoJSON).Methods("GET")
 	// api.HandleFunc("/geojson/update/{id}", geoController.UpdateGeoJSON).Methods("PUT")
 
+	// Setup CORS options
+	corsOptions := handlers.CORS(
+		handlers.AllowedOrigins([]string{"*"}),                             // Allow all origins, or specify allowed origins
+		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"}),  // Allow these methods
+		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}), // Allow these headers
+	)
+
 	// Start the server
 	port := os.Getenv("PORT")
 	log.Printf("Server running on port %s", port)
-	log.Fatal(http.ListenAndServe(":"+port, r))
+	log.Fatal(http.ListenAndServe(":"+port, corsOptions(r)))
 }

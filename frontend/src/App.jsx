@@ -36,7 +36,7 @@ const App = () => {
         },
         {
           path: "/login",
-          element: isAuthenticated ? <Navigate to="/main" /> : <Login />, // Redirect to main if already logged in
+          element: <Navigate to="/main" />, // Redirect to main if already logged in
         },
         {
           path: "/signup",
@@ -52,7 +52,7 @@ const App = () => {
         },
         {
           path: "/main",
-          element: isAuthenticated ? <MainPage /> : <Navigate to="/" />, // Redirect to landing if not authenticated
+          element: <MainPage />, // Redirect to landing if not authenticated
         },
       ],
     },
