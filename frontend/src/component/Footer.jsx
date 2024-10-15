@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="inset-x-0 bottom-0 bg-gray-800 text-white z-[10] h-fit py-2 ">
+    <div className="inset-x-0 bottom-0 overflow-hidden overscroll-contain bg-gray-800 text-white z-[10] h-fit py-2 ">
       <div className="flex items-center justify-between h-full gap-2 px-8 mx-auto max-w-7xl">
         <p className="text-l font-bold">
           Developed with ❤️ by{" "}

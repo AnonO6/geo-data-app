@@ -7,7 +7,7 @@ import Footer from "./Footer";
 
 const Layout = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-scroll overscroll-y-contain overflow-hidden">
       <Header />
       <main className="flex-grow">
         <Outlet /> {/* Renders the child route elements */}

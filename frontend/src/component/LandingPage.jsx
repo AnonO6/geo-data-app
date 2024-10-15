@@ -11,22 +11,22 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-blue-500 to-indigo-600">
-      <div className="text-center max-w-lg">
-        <h1 className="text-4xl font-bold text-white mb-6">
-          Welcome to Geo Data App
+    <div className="flex flex-col items-center justify-center h-screen overscroll-y-contain bg-gradient-to-r from-rose-100 via-purple-100 to-teal-100 animate-text">
+      <div className="text-center max-w-4xl">
+        <h1 className="text-6xl font-bold text-blue-950 mb-6">
+          Welcome to GeoDraw
         </h1>
-        <p className="text-lg text-white mb-6">
-          The Geo Data App allows you to manage and visualize geospatial data
+        <p className="text-lg text-blue-900 mb-6">
+          The Geo Draw App allows you to manage and visualize geospatial data
           with ease. Upload GeoJSON or KML files, draw custom shapes on a map,
           and save them to your account.
         </p>
-        <p className="text-lg text-white mb-8">
+        <p className="text-lg text-blue-900 mb-8">
           Get started by logging in to your account!
         </p>
         <button
           onClick={handleLoginClick}
-          className="bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-gray-100 transition-all"
+          className="bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-gray-100 hover:text-black transition-all"
         >
           Login
         </button>

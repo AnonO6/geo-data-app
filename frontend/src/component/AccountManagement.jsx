@@ -1,4 +1,3 @@
-// components/AccountManagement.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -13,14 +12,11 @@ const AccountManagement = () => {
     // Fetch current account details
     const fetchAccountDetails = async () => {
       try {
-        const response = await axios.get(
-          "https://your-backend-api.com/api/account",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-            },
-          }
-        );
+        const response = await axios.get("http://localhost:4000/api/account", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
         setUsername(response.data.username);
         setEmail(response.data.email);
@@ -37,66 +33,82 @@ const AccountManagement = () => {
 
     try {
       const response = await axios.put(
-        "https://your-backend-api.com/api/account",
+        "http://localhost:4000/api/account",
         {
           username,
           email,
-          password, // Send new password only if it’s updated
+          password: password || undefined, // Only send the password if it's updated
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
 
       if (response.status === 200) {
         setSuccess(true);
+        setError(""); // Clear any previous errors
       }
     } catch (err) {
       setError("Failed to update account information.");
+      setSuccess(false); // Ensure success message doesn't appear
     }
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Account Management</h2>
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
+      <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
+        Account Management
+      </h2>
       <form onSubmit={handleUpdate}>
-        <div>
+        {/* Username Input */}
+        <div className="mb-4">
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
             required
-            style={{ padding: "10px", marginBottom: "10px", width: "200px" }}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-        <div>
+
+        {/* Email Input */}
+        <div className="mb-4">
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             required
-            style={{ padding: "10px", marginBottom: "10px", width: "200px" }}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-        <div>
+
+        {/* Password Input */}
+        <div className="mb-4">
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="New Password (optional)"
-            style={{ padding: "10px", marginBottom: "10px", width: "200px" }}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-        <button type="submit" style={{ padding: "10px 20px" }}>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition duration-200"
+        >
           Update Account
         </button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        {/* Error and Success Messages */}
+        {error && <p className="text-red-500 mt-4">{error}</p>}
         {success && (
-          <p style={{ color: "green" }}>Account updated successfully!</p>
+          <p className="text-green-500 mt-4">Account updated successfully!</p>
         )}
       </form>
     </div>

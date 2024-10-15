@@ -31,8 +31,8 @@ const App = () => {
       children: [
         {
           index: true,
-          // element: isAuthenticated ? <Navigate to="/main" /> : <LandingPage />, // Redirect to main if logged in
-          element: <MainPage />,
+          element: isAuthenticated ? <Navigate to="/main" /> : <LandingPage />, // Redirect to main if logged in
+          // element: <MainPage />,
         },
         {
           path: "/login",

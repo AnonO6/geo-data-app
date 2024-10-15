@@ -5,11 +5,11 @@ const Header = () => {
   const token = localStorage.getItem("token"); // Check for the authentication token
 
   return (
-    <header className="bg-gray-800 text-white py-4">
+    <header className="bg-gray-800 text-white py-4 inset-x-0">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo or App name */}
         <Link to="/" className="text-2xl font-bold">
-          Geo Data App
+          Geo Draw
         </Link>
 
         {/* Navigation Links */}

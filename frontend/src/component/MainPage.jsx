@@ -12,10 +12,10 @@ const MainPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-        Geo Data Management
-        <p className="text-xl text-gray-800 mb-8">
+    <div className="min-h-screen bg-gradient-to-r from-rose-100 via-purple-100 to-teal-100 animate-text p-8">
+      <h2 className="text-4xl font-bold text-center text-blue-950 mb-8">
+        Mark Maps With Ease
+        <p className="text-xl text-blue-900 mb-8">
           You can upload GeoJSON and KML files, visualize them on a map, draw
           custom shapes, and download the created shapes for further use.
         </p>
