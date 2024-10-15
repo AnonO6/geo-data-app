@@ -33,8 +33,6 @@ type LoginRequest struct {
 
 func (as *AuthService) Register(w http.ResponseWriter, r *http.Request) {
 	var req RegisterRequest
-
-	// Decode request body
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		utils.JSONError(w, "Invalid request payload", http.StatusBadRequest)
 		return
@@ -49,18 +47,6 @@ func (as *AuthService) Register(w http.ResponseWriter, r *http.Request) {
 	// Validate password length
 	if len(req.Password) < 6 {
 		utils.JSONError(w, "Password must be at least 6 characters long", http.StatusBadRequest)
-		return
-	}
-
-	// Check if user with the same email already exists
-	var existingUser models.User
-	if err := as.db.Where("email = ?", req.Email).First(&existingUser).Error; err == nil {
-		// User with the provided email already exists
-		utils.JSONError(w, "User with this email already exists", http.StatusConflict) // 409 Conflict
-		return
-	} else if !errors.Is(err, gorm.ErrRecordNotFound) {
-		// Handle unexpected database errors
-		utils.JSONError(w, "Database error", http.StatusInternalServerError)
 		return
 	}
 
@@ -84,6 +70,7 @@ func (as *AuthService) Register(w http.ResponseWriter, r *http.Request) {
 
 	utils.JSONSuccess(w, "User registered successfully", http.StatusCreated)
 }
+
 func (as *AuthService) Login(w http.ResponseWriter, r *http.Request) {
 	var req LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {

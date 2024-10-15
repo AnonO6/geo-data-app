@@ -17,7 +17,7 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem("token");
     if (token) {
       setIsAuthenticated(true);
     }
@@ -44,11 +44,7 @@ const App = () => {
         },
         {
           path: "/account",
-          element: isAuthenticated ? (
-            <Navigate to="/main" />
-          ) : (
-            <AccountManagement />
-          ),
+          element: <AccountManagement />,
         },
         {
           path: "/main",

@@ -1,13 +1,22 @@
-// src/components/LandingPage.jsx
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const [token, setToken] = useState(null);
 
-  const handleLoginClick = () => {
-    navigate("/login");
+  useEffect(() => {
+    // Check for token in localStorage when the component mounts
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+  }, []);
+
+  const handleButtonClick = () => {
+    if (token) {
+      navigate("/main"); // Navigate to the draw page if token is present
+    } else {
+      navigate("/login"); // Otherwise, navigate to the login page
+    }
   };
 
   return (
@@ -22,13 +31,15 @@ const LandingPage = () => {
           and save them to your account.
         </p>
         <p className="text-lg text-blue-900 mb-8">
-          Get started by logging in to your account!
+          {token
+            ? "Start drawing your geospatial data now!"
+            : "Get started by logging in to your account!"}
         </p>
         <button
-          onClick={handleLoginClick}
+          onClick={handleButtonClick}
           className="bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-gray-100 hover:text-black transition-all"
         >
-          Login
+          {token ? "Draw" : "Login"}
         </button>
       </div>
     </div>

@@ -2,32 +2,33 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const AccountManagement = () => {
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [newPassword, setnewPassword] = useState("");
+  const [oldPassword, setoldPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    // Fetch current account details
-    const fetchAccountDetails = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/api/account", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+  // useEffect(() => {
+  //   // Fetch current account details
+  //   const fetchAccountDetails = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:8080/api/account", {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //         },
+  //       });
 
-        setUsername(response.data.username);
-        setEmail(response.data.email);
-      } catch (err) {
-        setError("Failed to load account information.");
-      }
-    };
+  //       setUsername(response.data.username);
+  //       setEmail(response.data.email);
+  //     } catch (err) {
+  //       setError("Failed to load account information.");
+  //     }
+  //   };
 
-    // fetchAccountDetails();
-  }, []);
+  //   // fetchAccountDetails();
+  // }, []);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -36,9 +37,9 @@ const AccountManagement = () => {
       const response = await axios.put(
         "http://localhost:8080/api/account",
         {
-          username,
           email,
-          password: password || undefined, // Only send the password if it's updated
+          password: newPassword,
+          old_password: oldPassword || undefined, // Only send the password if it's updated
         },
         {
           headers: {
@@ -54,6 +55,7 @@ const AccountManagement = () => {
       }
     } catch (err) {
       setError("Failed to update account information.");
+      console.log(err);
       setSuccess(false); // Ensure success message doesn't appear
     }
   };
@@ -64,18 +66,6 @@ const AccountManagement = () => {
         Account Management
       </h2>
       <form onSubmit={handleUpdate}>
-        {/* Username Input */}
-        <div className="mb-4">
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
-            required
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-        </div>
-
         {/* Email Input */}
         <div className="mb-4">
           <input
@@ -87,14 +77,23 @@ const AccountManagement = () => {
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-
-        {/* Password Input */}
+        {/* Old Password Input */}
         <div className="mb-4">
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="New Password (optional)"
+            value={oldPassword}
+            onChange={(e) => setoldPassword(e.target.value)}
+            placeholder="Old Password"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        {/* New Password Input */}
+        <div className="mb-4">
+          <input
+            type="password"
+            value={newPassword}
+            onChange={(e) => setnewPassword(e.target.value)}
+            placeholder="New Password"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>

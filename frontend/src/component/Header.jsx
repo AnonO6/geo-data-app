@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  const token = localStorage.getItem("token"); // Check for the authentication token
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    // Check for token in localStorage when the component mounts
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+  }, []);
 
   return (
     <header className="bg-gray-800 text-white py-4 inset-x-0">
@@ -18,7 +24,7 @@ const Header = () => {
             Home
           </Link>
 
-          {/* Conditionally render login or account management */}
+          {/* Conditionally render login or account management based on token */}
           {token ? (
             <Link to="/account" className="text-white hover:text-gray-400">
               Account
